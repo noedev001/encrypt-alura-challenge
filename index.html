@@ -10,8 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
-    <script src="js/index.js"></script>
-
+    <script></script>
     <link rel="shortcut icon" href="images/logo.ico" type="image/x-icon">
     <title>Encriptador ONE</title>
 </head>
@@ -21,35 +20,63 @@
         <header>
             <div class="container-menu" id="container-menu">
                 <div class="logo">
-                    <img src="images/logoc.svg" alt="logo2" class="logo-menu-des">
-                    <img src="images/logo.svg" alt="logo alura" class="logo-menu">
+                    <img src="images/logoc.png" alt="logo2" class="logo-menu-des">
+                    <img src="images/logo.png" alt="logo alura" class="logo-menu">
                 </div>
                 <ul>
                     <li>
-                        <a href="#openModal">Nuevos Valores</a>
+                        <a href="#openModal" id="btn-modal">Nuevos Valores</a>
                     </li>
                     <li>
                         <a href="#" id="btn-predeterminado">Valores Predeterminados</a>
                     </li>
+                    <li>
+                        <a href="#" id="btn-eliminar">Eliminar valores</a>
+                    </li>
                 </ul>
                 <div class="footer-menu">
-                    <a href="https://github.com/noedev001" target="_blank"><ion-icon name="logo-github"></ion-icon></a>
-                    <a href="https://www.linkedin.com/in/einar-herrera-2800a6230/" target="_blank"><ion-icon
+                    <a href="https://github.com/noedev001" target="_blank" class="git"><ion-icon
+                            name="logo-github"></ion-icon></a>
+                    <img src="images/home2.png" alt="homero" class="img-homero">
+                    <a href="https://www.linkedin.com/in/einar-herrera-2800a6230/" target="_blank" class="lin"><ion-icon
                             name="logo-linkedin"></ion-icon></a>
                 </div>
             </div>
         </header>
+        <section id="loading">
+            <div class="container-loading">
+                <img src="images/homero-loading.png" alt="homero" class="homero-img">
+                <div>
+                    <img src="images/nube1.png" alt="nube" class="izq-nube">
+                    <img src="images/one-title.png" alt="titulo" class="titulo-loading">
+                    <img src="images/nube3.png" alt="nube" class="der-nube">
+                </div>
+
+                <div id="load">
+                    <div>G</div>
+                    <div>N</div>
+                    <div>I</div>
+                    <div>D</div>
+                    <div>A</div>
+                    <div>O</div>
+                    <div>L</div>
+                </div>
+            </div>
+        </section>
         <section id="Initial">
             <div class="text-encriptar">
                 <div class="container-text">
-                    <textarea id="textoEntrada" placeholder="Ingrese el texto aqui" class="text-area"></textarea>
+                    <div class="pizarra">
+                        <textarea id="textoEntrada" placeholder="Ingrese el texto aqui..." class="text-area"></textarea>
+                        <img src="images/bart.png" alt="bart" class="img-bart">
+                        <img src="images/bart2.png" alt="bart" class="img-bart2">
+                    </div>
                     <div class="content-btn">
-                        <div>
+                        <div class="info-content">
                             <p class="warning-info"><img src="images/advertencia.png" alt="anvertencia">Solo letras
                                 minusculas, sin acentos</p>
                         </div>
                         <div class="centrar-btn">
-
                             <button id="btn-Encriptar" class="btn-encriptar">Encriptar</button>
                             <button id="btn-Desencriptar" class="btn-desencritar">Desencriptar</button>
                         </div>
@@ -62,15 +89,17 @@
                         <textarea id="mesage-encript" class="heading" data-target-resolver></textarea>
                     </div>
                     <div class="image">
-                        <img class="hiden" src="images/Muñeco.svg" alt="sin mensaje">
+                        <img class="hiden" src="images/homeroespera.png" alt="sin mensaje">
                     </div>
                     <div class="title-text">
                         <p class="hiden-title">Ningún Mensaje fue encontrado</p>
                         <p class="hiden-text">Ingresa el texto que desees encriptar o desencriptar.</p>
                     </div>
-                    <div class="button-copy">
-                        <button id="btn-copy" class="btn-copy-hide" type="button">Copiar</button>
+                    <div class="content-copy-alert">
                         <div id="copy-alert"></div>
+                        <div class="btnCopy-content">
+                            <button id="btn-copy" class="btn-copy-hide" type="button">Copiar</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -82,20 +111,24 @@
                         <h2>Agregar Nuevas Variables</h2>
                     </div>
                     <div class="conten-variables">
-                        <textarea name="variables" id="variables" cols="30" rows="5" class="variables"
-                            placeholder='{"a":"ai","u":"enter"}'></textarea>
+                        <div class="input">
+                            <div class="form-control">
+                                <input type="text" name="llave" id="llave" placeholder="LLave">
+                            </div>
+                            <div class="form-control">
+                                <input type="text" name="valor" id="valor" placeholder="Valor">
+                            </div>
+                        </div>
                         <div class="fomato-variables">
                             <h3>Fomato</h3>
                             <p>
-                                Encerrar con las llaves, las key y valores entre comillas dobles y seaprados por dos
-                                puntos
+                                Ingresar solo una llave mas su valor
                             </p>
                         </div>
                     </div>
                     <div class="footer-modal">
                         <div class="message-modal"></div>
-                        <button id="btn-modal-validar">Validar</button>
-                        <button id="btn-modal-agregar">Agregar Variables</button>
+                        <button id="btn-modal-validar">Agregar</button>
                     </div>
                 </div>
             </div>
@@ -106,7 +139,8 @@
     </main>
 
     <script src="app.js"></script>
-
+    <script src="js/anime.min.js"></script>
+    <script src="js/animation.js"></script>
 </body>
 
 </html>

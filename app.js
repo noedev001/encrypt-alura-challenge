@@ -16,6 +16,54 @@ const btnCopy = document.querySelector("#btn-copy");
 const message = document.querySelector("#mesage-encript");
 const btnDesencriptar = document.querySelector("#btn-Desencriptar");
 
+const btnVarPre = document.querySelector("#btn-predeterminado");
+const btnMod = document.querySelector("#btn-modal");
+const btnGit = document.querySelector(".git");
+const btnLin = document.querySelector(".lin");
+const btnEliminar = document.querySelector("#btn-eliminar");
+const btnClose = document.querySelector(".close");
+
+btnGit.addEventListener("click", function () { sonidoHomero(); });
+btnLin.addEventListener("click", function () { sonidoHomero(); });
+btnMod.addEventListener("click", function () { sonidoHomero();  });
+btnVarPre.addEventListener("click", () => { sonidoHomero(); });
+btnEliminar.addEventListener("click", () => {sonidoHomero(); variables=""; });
+btnClose.addEventListener("click",()=> { sonidoHomero(); });
+
+
+function sonidoTextArea() {
+    let etiquetaAudio = document.createElement("audio")
+    etiquetaAudio.setAttribute("src", "sound/ay-caramba.mp3")
+    etiquetaAudio.play()
+}
+function sonidoHomero() {
+    let etiquetaAudio = document.createElement("audio")
+    etiquetaAudio.setAttribute("src", "sound/homero-ouch-2.mp3")
+    etiquetaAudio.play()
+}
+function sonidoNelson() {
+    let etiquetaAudio = document.createElement("audio")
+    etiquetaAudio.setAttribute("src", "sound/nelson-aha.mp3")
+    etiquetaAudio.play()
+}
+
+textoEntrada.addEventListener("click", () => {
+
+    if (screen.width > 1024) {
+        document.querySelector(".img-bart").style.display = "none";
+        document.querySelector(".img-bart2").style.display = "flex";
+        document.querySelector(".img-bart2").style.transition = "0.5s";
+    }
+    sonidoTextArea();
+});
+
+textoEntrada.addEventListener("blur", () => {
+    if (screen.width > 1024) {
+    document.querySelector(".img-bart2").style.display = "none";
+    document.querySelector(".img-bart").style.display = "flex";
+    }
+});
+
 
 textoEntrada.addEventListener("keyup", () => {
     textoEntrada.value = textoEntrada.value.toLowerCase();
@@ -28,7 +76,7 @@ textoEntrada.addEventListener("keyup", () => {
 
 btnEncriptar.addEventListener("click", (e) => {
     e.preventDefault();
-
+    sonidoHomero()
     if (textoEntrada.value.trim().length !== 0) {
 
         if (/^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?ñÑ\s]*$/i.test(textoEntrada.value.trim())) {
@@ -59,9 +107,21 @@ btnEncriptar.addEventListener("click", (e) => {
             }
             mensajeEncriptado(cambio);
             textoEntrada.value = "";
+            if (screen.width > 1024) {
+            document.querySelector(".img-bart").style.display = "flex";
+            document.querySelector(".img-bart2").style.display = "none";
+            document.querySelector(".img-bart").style.transition = "0.5s";
+                document.querySelector(".content-copy-alert").style.display = "flex";
+            }
+            if (screen.width < 1024) {
+            document.querySelector(".content-copy-alert").style.display = "block";
+            }
             btnCopy.focus();
         } else {
             document.querySelector(".warning-info").style.color = "red";
+            setTimeout(() => {
+                sonidoNelson();
+            }, 1200);
         }
     } else {
         textoEntrada.value = "";
@@ -72,11 +132,14 @@ btnEncriptar.addEventListener("click", (e) => {
 
 function mensajeEncriptado(msj) {
 
-
+   
     imgResult.style.display = 'none';
     content.style.display = "none";
+    if (screen.width > 1024) {
     document.querySelector(".content-result-msj").style.display = "flex";
-
+    }else{
+        document.querySelector(".content-result-msj").style.display = "block";
+    }
     let strings = [
         msj
     ];
@@ -162,40 +225,42 @@ function mensajeEncriptado(msj) {
 
 
 btnCopy.addEventListener("click", () => {
-    copiarMensaje();
-});
-
-async function copiarMensaje() {
     let texto = message.value;
     navigator.clipboard.writeText(texto);
 
     const alertmesasage = document.querySelector("#copy-alert");
 
     alertmesasage.textContent = 'Copiado al portapapeles..!';
-    alertmesasage.style.display = 'flex';
+    if(screen.width>1024){
+        alertmesasage.style.display = 'flex';
+    }else{
+        alertmesasage.style.display = 'block';
+    }
+    sonidoHomero();
     setTimeout(() => {
         alertmesasage.style.display = 'none';
-        textoEntrada.focus();
 
-        if (screen.width <= 768){
+        if (screen.width < 1024) {
             imgResult.style.display = 'none';
-        }else{
+        } else {
             imgResult.style.display = 'block';
         }
         content.style.display = "block";
         document.querySelector(".content-result-msj").style.display = "none";
+        document.querySelector(".content-copy-alert").style.display = "none";
         btnCopy.style.display = "none";
     }, 2000);
-
-
-}
+});
 
 
 /**
  * Desencriptar 
  */
 
-btnDesencriptar.addEventListener("click", () => {
+btnDesencriptar.addEventListener("click", (e) => {
+
+    e.preventDefault();
+    sonidoHomero()
     if (textoEntrada.value.trim().length !== 0) {
         if (/^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?ñÑ\s]*$/i.test(textoEntrada.value.trim())) {
             let mensaje = textoEntrada.value;
@@ -209,9 +274,23 @@ btnDesencriptar.addEventListener("click", () => {
             }
             mensajeEncriptado(mensaje);
             textoEntrada.value = "";
+            if(screen.width>1024){
+                document.querySelector(".img-bart").style.display = "flex";
+                document.querySelector(".img-bart2").style.display = "none";
+                document.querySelector(".img-bart").style.transition = "0.5s";
+                document.querySelector(".content-copy-alert").style.display = "flex";
+            }
+
+            if(screen.width<1024){
+                document.querySelector(".content-copy-alert").style.display = "block";
+            }
+            
             btnCopy.focus();
         } else {
             document.querySelector(".warning-info").style.color = "red";
+            setTimeout(() => {
+                sonidoNelson();
+            }, 1500);
         }
     } else {
         textoEntrada.value = "";
@@ -225,56 +304,97 @@ btnDesencriptar.addEventListener("click", () => {
 
 const validar = document.querySelector("#btn-modal-validar");
 const textoVariables = document.querySelector("#variables");
-const btnAgregar= document.querySelector("#btn-modal-agregar");
+
+const textLLave = document.querySelector("#llave");
+const textValor = document.querySelector("#valor");
+
+textLLave.addEventListener("keyup", () => {
+    textLLave.value = textLLave.value.toLowerCase();
+    const regex = /^[a-zA-ZñÑ\s]*$/;
+    if (!regex.test(textLLave.value)) {
+        textLLave.value = textLLave.value.slice(0, -1);
+    }
+    if (textLLave.value.length > 1) {
+        textLLave.value = textLLave.value.slice(0, -1);
+    }
+});
+textValor.addEventListener("keyup", () => {
+    textValor.value = textValor.value.toLowerCase();
+    const regex = /^[a-z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?ñ\s]*$/
+    if (!regex.test(textValor.value)) {
+        textValor.value = textValor.value.slice(0, -1);
+    }
+});
+
+
 
 validar.addEventListener("click", () => {
-    try {
-        const objeto = JSON.parse(textoVariables.value);
+
+    let aux = "";
+
+    textLLave.value = textLLave.value.trim();
+    textValor.value = textValor.value.trim();
+
+    sonidoHomero();
+
+    if (textLLave.value.length > 0 && textValor.value.length > 0) {
+        if (textLLave.value.length === 1) {
+            if (/^[a-zñ\s]*$/i.test(textLLave.value.trim())) {
+                if (/^[a-z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?ñ\s]*$/i.test(textValor.value.trim())) {
+                    try {
+                        document.querySelector(".message-modal").style.display = "none";
+                        if (Object.keys(variables).length>0){
+                            let tranformar = JSON.stringify(variables);
+                            tranformar=tranformar.substring(0, tranformar.length-1);
+                            tranformar = tranformar + "," + '"' + textLLave.value + '":"' + textValor.value + '"}'
+                            const objeto = JSON.parse(tranformar);
+                            variables = objeto;
+
+                            document.querySelector(".message-modal").style.display = "flex";
+                            document.querySelector(".message-modal").style.background = "#0A3871";
+                            document.querySelector(".message-modal").textContent = "Valores Agregados";
+                            setTimeout(() => {
+                                document.querySelector(".message-modal").style.display = "none";
+                                textLLave.value = "";
+                                textValor.value = "";
+                            }, 3000)
+
+                
+                        }else{
+                            aux = '{"' + textLLave.value + '":"' + textValor.value + '"}'
+                            const objeto = JSON.parse(aux);
+                            variables = objeto;
+                       
+                        }
+                    } catch (e) {
+                        console.log(e);
+                        document.querySelector(".message-modal").style.display = "flex";
+                        document.querySelector(".message-modal").textContent = "Error Fallo Algo";
+                    }
+                } else {
+                    document.querySelector(".message-modal").style.display = "flex";
+                    document.querySelector(".message-modal").textContent = "Valor de Llave n aceptado";
+                }
+            } else {
+                document.querySelector(".message-modal").style.display = "flex";
+                document.querySelector(".message-modal").textContent = "La LLave caracteres especiales";
+            }
+        } else {
+            document.querySelector(".message-modal").style.display = "flex";
+            document.querySelector(".message-modal").textContent = "La LLave solo de un Consonante";
+        }
+    } else {
         document.querySelector(".message-modal").style.display = "flex";
-        document.querySelector(".message-modal").style.background ="#0A3871";
-        document.querySelector(".message-modal").textContent = "Formato Correcto";
-
-        setTimeout(() => {
-            document.querySelector(".message-modal").style.display = "none";
-            btnAgregar.style.display = "block";
-        },3000)
-
-
-    } catch (e) {
-        document.querySelector(".message-modal").style.display ="flex";
-        document.querySelector(".message-modal").textContent = "Revisar el Formato";
+        document.querySelector(".message-modal").textContent = "Elemento Vacio";
     }
+
 });
 
 /**
  * Agregar Valores 
  */
 
-btnAgregar.addEventListener("click", () => {
-    try {
-        const objeto = JSON.parse(textoVariables.value);
-        variables=objeto;
-
-        console.log(variables);
-
-        document.querySelector(".message-modal").style.display = "flex";
-        document.querySelector(".message-modal").style.background = "#0A3871";
-        document.querySelector(".message-modal").textContent = "Valores Agregados";
-
-        setTimeout(() => {
-            document.querySelector(".message-modal").style.display = "none";
-            btnAgregar.style.display = "none";
-        }, 3000)
-
-
-    } catch (e) {
-        console.log(e);
-        document.querySelector(".message-modal").style.display = "flex";
-        document.querySelector(".message-modal").textContent = "Revisar el Formato";
-    }
-});
-
-const btnPredeterminado=document.querySelector("#btn-predeterminado");
+const btnPredeterminado = document.querySelector("#btn-predeterminado");
 
 btnPredeterminado.addEventListener("click", () => {
     variables =
